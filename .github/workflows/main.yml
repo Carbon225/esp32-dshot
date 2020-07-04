@@ -22,7 +22,7 @@ jobs:
         ./install.sh
         
     - name: Create basic project
-      run: cp -r ~/esp/esp-idf/examples/get-started/hello-world $GITHUB_WORKSPACE/project
+      run: cp -r ~/esp/esp-idf/examples/get-started/hello_world $GITHUB_WORKSPACE/project
         
     - uses: actions/checkout@v2
       with:
