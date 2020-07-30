@@ -9,20 +9,11 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container: espressif/idf:release-v4.0
     
     steps:      
-    - name: Install ESP-IDF
-      run: |
-        sudo apt-get update
-        sudo apt-get install git wget flex bison gperf python python-pip python-setuptools cmake ninja-build ccache libffi-dev libssl-dev dfu-util python3 python3-pip python3-setuptools
-        sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
-        mkdir -p ~/esp && cd ~/esp
-        git clone --branch release/v4.0 --recursive https://github.com/espressif/esp-idf.git
-        cd ~/esp/esp-idf
-        ./install.sh
-        
     - name: Create basic project
-      run: cp -r ~/esp/esp-idf/examples/get-started/hello_world $GITHUB_WORKSPACE/project
+      run: cp -r $IDF_PATH/examples/get-started/hello_world $GITHUB_WORKSPACE/project
         
     - uses: actions/checkout@v2
       with:
@@ -31,5 +22,5 @@ jobs:
     - name: Compile project
       run: |
         cd $GITHUB_WORKSPACE/project
-        . $HOME/esp/esp-idf/export.sh
+        . $IDF_PATH/export.sh
         idf.py build
